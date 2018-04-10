@@ -1,14 +1,20 @@
 sudo: false
 language: cpp
-compiler: clang
-
-install:
-  - make
-
-script:
-  - ./triangle_unittest
+compiler: gcc
 
 addons:
   apt:
     sources:
     - ubuntu-toolchain-r-test
+
+before_install:
+  - pip install --user cpp-coveralls
+
+install:
+  - CXXFLAGS="-fprofile-arcs -ftest-coverage" make
+
+script:
+  - ./triangle_unittest
+
+after_success:
+  - coveralls --exclude googletest --exclude ".*_unittest.cc" --gcov-options '\-lp'
