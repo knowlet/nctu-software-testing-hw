@@ -2,5 +2,4 @@
 
 TriangleType Triangle::IsATriangle(int a, int b, int c)
 {
-
 }

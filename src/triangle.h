@@ -6,7 +6,7 @@ const int NOM = (MAX + MIN) / 2;
 
 enum class TriangleType
 {
-    GENERAL,        // A triangle is a polygon with three edges and three vertices
+    SCALENE,        // A triangle is a polygon with three edges and three vertices
     ISOSCELES,      // A triangle that has two sides of equal length
     EQUILATERAL     // A triangle in which all three sides are equal
 };
