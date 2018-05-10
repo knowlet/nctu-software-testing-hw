@@ -18,3 +18,4 @@ script:
 
 after_success:
   - coveralls --exclude googletest --exclude ".*_unittest.cc" --gcov-options '\-lp'
+  - bash <(curl -s https://codecov.io/bash) -t e0b40fda-ac03-4859-99c5-189c71710036 -X gcov
