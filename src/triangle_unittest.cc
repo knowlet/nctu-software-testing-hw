@@ -2,7 +2,7 @@
 #include "gtest/gtest.h"
 
 namespace {
-TEST(BoundaryValue, Normal)
+TEST(TriangleTest, BoundaryValueNormal)
 {
     Triangle t;
     // minimum (min)
@@ -25,7 +25,7 @@ TEST(BoundaryValue, Normal)
     EXPECT_THROW(t.IsATriangle(MAX, NOM, NOM), TriangleException);
 }
 
-TEST(BoundaryValue, Robust)
+TEST(TriangleTest, BoundaryValueRobust)
 {
     Triangle t;
     // min-
@@ -38,7 +38,7 @@ TEST(BoundaryValue, Robust)
     EXPECT_THROW(t.IsATriangle(MAX + 1, NOM, NOM), TriangleException);
 }
 
-TEST(BoundaryValue, WorstCase)
+TEST(TriangleTest, BoundaryValueWorstCase)
 {
     Triangle t;
     // minimum (min)
@@ -73,7 +73,7 @@ TEST(BoundaryValue, WorstCase)
     EXPECT_EQ(TriangleType::ISOSCELES, t.IsATriangle(MIN, MAX, MAX));
 }
 
-TEST(BoundaryValue, SpecialValue)
+TEST(TriangleTest, BoundaryValueSpecialValue)
 {
     Triangle t;
 
@@ -83,7 +83,7 @@ TEST(BoundaryValue, SpecialValue)
     EXPECT_EQ(TriangleType::EQUILATERAL, t.IsATriangle(10, 10, 10));
 }
 
-TEST(EquivalenceClass, WeakNormal)
+TEST(TriangleTest, EquivalenceClassWeakNormal)
 {
     Triangle t;
     EXPECT_EQ(TriangleType::EQUILATERAL, t.IsATriangle(5, 5, 5));
@@ -92,7 +92,7 @@ TEST(EquivalenceClass, WeakNormal)
     EXPECT_THROW(t.IsATriangle(4, 1, 2), TriangleException);
 }
 
-TEST(EquivalenceClass, WeakRobust)
+TEST(TriangleTest, EquivalenceClassWeakRobust)
 {
     Triangle t;
     EXPECT_THROW(t.IsATriangle(-1, 5, 5), TriangleException);
@@ -103,7 +103,7 @@ TEST(EquivalenceClass, WeakRobust)
     EXPECT_THROW(t.IsATriangle(5, 5, 201), TriangleException);
 }
 
-TEST(EquivalenceClass, StrongRobust)
+TEST(TriangleTest, EquivalenceClassStrongRobust)
 {
     Triangle t;
     EXPECT_THROW(t.IsATriangle(-1, 5, 5), TriangleException);
@@ -116,7 +116,7 @@ TEST(EquivalenceClass, StrongRobust)
     EXPECT_THROW(t.IsATriangle(-1, -1, -1), TriangleException);
 }
 
-TEST(EdgeTesting, WeakNormal)
+TEST(TriangleTest, EdgeTestingWeakNormal)
 {
     Triangle t;
     // minimum (min)
@@ -139,7 +139,7 @@ TEST(EdgeTesting, WeakNormal)
     EXPECT_THROW(t.IsATriangle(MAX, 5, 5), TriangleException);
 }
 
-TEST(EdgeTesting, WeakRobust)
+TEST(TriangleTest, EdgeTestingWeakRobust)
 {
     Triangle t;
     // min-
@@ -152,7 +152,7 @@ TEST(EdgeTesting, WeakRobust)
     EXPECT_THROW(t.IsATriangle(MAX + 1, 5, 5), TriangleException);
 }
 
-TEST(EdgeTesting, StrongRobust)
+TEST(TriangleTest, EdgeTestingStrongRobust)
 {
     Triangle t;
     // min-
@@ -165,7 +165,7 @@ TEST(EdgeTesting, StrongRobust)
     EXPECT_THROW(t.IsATriangle(MAX + 1, 5, 5), TriangleException);
 }
 
-TEST(Decision, TableBased)
+TEST(TriangleTest, DecisionTableBased)
 {
     Triangle t;
     // a1:Not a triangle
@@ -181,7 +181,7 @@ TEST(Decision, TableBased)
     // a2:Scalene
     EXPECT_EQ(TriangleType::SCALENE, t.IsATriangle(5, 4, 3));
 }
-TEST(ExceptionTest, ShouldThrowErr)
+TEST(TriangleTest, ExceptionTest)
 {
     Triangle t;
     try {
@@ -192,4 +192,56 @@ TEST(ExceptionTest, ShouldThrowErr)
         // std::cout << e.what() << std::endl;
     }
 }
+
+// Statement coverage
+TEST( TriangleTest, CodeCoverageC0 ) {
+    Triangle t;
+	EXPECT_THROW(t.IsATriangle(1, 2, 3), TriangleException);
+	EXPECT_EQ(TriangleType::EQUILATERAL, t.IsATriangle(5, 5, 5));
+	EXPECT_EQ(TriangleType::ISOSCELES, t.IsATriangle(2, 2, 3));
+	EXPECT_EQ(TriangleType::SCALENE, t.IsATriangle(3, 4, 5));
+}
+
+// DD-path coverage
+TEST( TriangleTest, CodeCoverageC1 ) {
+    Triangle t;
+	EXPECT_THROW(t.IsATriangle(-1, 1, 1), TriangleException);
+	EXPECT_THROW(t.IsATriangle(1, 2, 3), TriangleException);
+	EXPECT_EQ(TriangleType::EQUILATERAL, t.IsATriangle(5, 5, 5));
+	EXPECT_EQ(TriangleType::ISOSCELES, t.IsATriangle(2, 2, 3));
+	EXPECT_EQ(TriangleType::SCALENE, t.IsATriangle(3, 4, 5));
+}
+
+// DD-path coverage + Simple loop coverage
+TEST( TriangleTest, CodeCoverageC2 ) {
+    Triangle t;
+	//same as CodeCoverageC1 because of Triangle Problem doesn't have a Loop
+	EXPECT_THROW(t.IsATriangle(-1, 1, 1), TriangleException);
+	EXPECT_THROW(t.IsATriangle(1, 2, 3), TriangleException);
+	EXPECT_EQ(TriangleType::EQUILATERAL, t.IsATriangle(5, 5, 5));
+	EXPECT_EQ(TriangleType::ISOSCELES, t.IsATriangle(2, 2, 3));
+	EXPECT_EQ(TriangleType::SCALENE, t.IsATriangle(3, 4, 5));
+}
+
+TEST( TriangleTest, CodeCoverageMCDC ) {
+    Triangle t;
+	// first branch
+	EXPECT_THROW(t.IsATriangle(201, 1, 1), TriangleException);
+	EXPECT_THROW(t.IsATriangle(1, 201, 1), TriangleException);
+	EXPECT_THROW(t.IsATriangle(1, 1, 201), TriangleException);
+	EXPECT_THROW(t.IsATriangle(0, 1, 1), TriangleException);
+	EXPECT_THROW(t.IsATriangle(1, 0, 1), TriangleException);
+	EXPECT_THROW(t.IsATriangle(1, 1, 0), TriangleException);
+	EXPECT_EQ(TriangleType::EQUILATERAL, t.IsATriangle(5, 5, 5));
+	// second branch
+	EXPECT_THROW(t.IsATriangle(1, 2, 3), TriangleException);
+	EXPECT_THROW(t.IsATriangle(3, 2, 1), TriangleException);
+	EXPECT_THROW(t.IsATriangle(2, 3, 1), TriangleException);
+	// third branch
+	EXPECT_EQ(TriangleType::ISOSCELES, t.IsATriangle(2, 2, 3));
+	EXPECT_EQ(TriangleType::ISOSCELES, t.IsATriangle(2, 3, 2));
+	EXPECT_EQ(TriangleType::ISOSCELES, t.IsATriangle(3, 2, 2));
+	EXPECT_EQ(TriangleType::SCALENE, t.IsATriangle(3, 4, 5));
+}
+
 }  // namespace
