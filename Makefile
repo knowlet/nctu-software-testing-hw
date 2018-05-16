@@ -29,7 +29,7 @@ CXXFLAGS += -std=c++11 -g -Wall -Wextra -pthread
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
-TESTS = triangle_unittest
+TESTS = triangle_unittest nextdate_unittest
 
 # All Google Test headers.  Usually you shouldn't change this
 # definition.
@@ -41,7 +41,7 @@ GTEST_HEADERS = $(GTEST_DIR)/include/gtest/*.h \
 all : $(TESTS)
 
 test :
-	./$(TESTS)
+	find . -name '*_unittest' -exec {} \;
 
 clean :
 	rm -f $(TESTS) gtest.a gtest_main.a *.o
@@ -82,4 +82,15 @@ triangle_unittest.o : $(USER_DIR)/triangle_unittest.cc \
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/triangle_unittest.cc
 
 triangle_unittest : triangle.o triangle_unittest.o gtest_main.a
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
+
+
+nextdate.o : $(USER_DIR)/nextdate.cc $(USER_DIR)/nextdate.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/nextdate.cc
+
+nextdate_unittest.o : $(USER_DIR)/nextdate_unittest.cc \
+                     $(USER_DIR)/nextdate.h $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/nextdate_unittest.cc
+
+nextdate_unittest : nextdate.o nextdate_unittest.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@
