@@ -165,7 +165,7 @@ TEST(EdgeTesting, StrongRobust)
     EXPECT_THROW(t.IsATriangle(MAX + 1, 5, 5), TriangleException);
 }
 
-TEST(DecisionTable, Based)
+TEST(Decision, TableBased)
 {
     Triangle t;
     // a1:Not a triangle
@@ -180,5 +180,16 @@ TEST(DecisionTable, Based)
     EXPECT_EQ(TriangleType::ISOSCELES, t.IsATriangle(2, 5, 5));
     // a2:Scalene
     EXPECT_EQ(TriangleType::SCALENE, t.IsATriangle(5, 4, 3));
+}
+TEST(ExceptionTest, ShouldThrowErr)
+{
+    Triangle t;
+    try {
+        EXPECT_EQ(TriangleType::EQUILATERAL, t.IsATriangle(-1, -1, -1));
+    }
+    catch(TriangleException& e) {
+        EXPECT_STREQ(ERRMSG, e.what());
+        // std::cout << e.what() << std::endl;
+    }
 }
 }  // namespace

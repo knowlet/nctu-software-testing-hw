@@ -1,4 +1,5 @@
 #include <exception>
+#define ERRMSG "Not a triangle"
 
 const int MAX = 200;
 const int MIN = 1;
@@ -12,9 +13,10 @@ enum class TriangleType
 };
 
 class TriangleException: public std::exception {
+public:
     virtual const char* what() const throw()
     {
-        return "Not a triangle";
+        return ERRMSG;
     }
 };
 
