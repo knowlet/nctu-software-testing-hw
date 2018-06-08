@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/knowlet/nctu-st-hw1.svg?branch=master)](https://travis-ci.org/knowlet/nctu-st-hw1)
+[![Build Status](https://travis-ci.org/knowlet/koa-starter.svg?branch=develop)](https://travis-ci.org/knowlet/koa-starter)
 [![Coverage Status](https://coveralls.io/repos/github/knowlet/nctu-st-hw1/badge.svg?branch=master)](https://coveralls.io/github/knowlet/nctu-st-hw1?branch=master)
 [![codecov](https://codecov.io/gh/knowlet/nctu-st-hw1/branch/master/graph/badge.svg)](https://codecov.io/gh/knowlet/nctu-st-hw1)
 
